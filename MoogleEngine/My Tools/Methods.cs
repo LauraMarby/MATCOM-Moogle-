@@ -1,6 +1,105 @@
 namespace MoogleEngine;
 public class Methods
 {
+    public static int CLOSE(string a, string[] p) //metodo para hallar distancia entre palabras de titulo y texto
+    {
+        string[] t = Methods.StrConverter(a);
+        int[][] pos = new int[p.Length][];
+        pos = Methods.PosMaker(p, t, pos);
+        int distance = Distance(pos, new int[pos.Length], int.MaxValue, 0);
+        return distance;
+    }
+    public static int Distance(int[][] pos, int[] numbers, int distance, int count) //metodo para hallar la distancia2
+    {
+        foreach (int x in pos[count])
+        {
+            numbers[count] = x;
+            if (count == pos.Length - 1)
+            {
+                int max = numbers.Max();
+                int min = numbers.Min();
+                if (distance > max - min)
+                {
+                    distance = max - min;
+                }
+            }
+            else
+            {
+                distance = Distance(pos, numbers, distance, count + 1);
+            }
+        }
+        return distance;
+    }
+    public static int[][] PosMaker(string[] p, string[] t, int[][] pos) //metodo que crea mi familia de posiciones de palabras
+    {
+        for (int i = 0; i < p.Length; i++)
+        {
+            pos[i] = CarTell(p[i], t);
+        }
+        return pos;
+    }
+    public static int[] CarTell(string a, string[] b)//metodo quedevuelve lasposisciones de las palabras en el texto
+    {
+        int[] car = new int[] { };
+        for (int i = 0; i < b.Length; i++)
+        {
+            if (b[i] == a)
+            {
+                car=AddInt(i,car);
+            }
+        }
+        return car;
+    }
+    static int[] AddInt(int s, int[] t)
+    {
+        int[] R = new int[t.Length + 1];
+        int i = 0;
+        foreach (int x in t)
+        {
+            R[i] = t[i];
+            i++;
+        }
+        R[R.Length - 1] = s;
+        return R;
+    }
+    public static bool ContainsText((TXT, float) a, string[] b) //metodo de pertenencia usado en e operador de cercania
+    {
+        int count = 0;
+        foreach (string x in b)
+        {
+            if (a.Item1.text.Contains(x))
+            {
+                count++;
+            }
+        }
+        if (count == b.Length)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public static bool ContainsTitle((TXT, float) a, string[] b) //metodo de pertenencia usado en e operador de cercania
+    {
+        int count = 0;
+        foreach (string x in b)
+        {
+            if (a.Item1.title.ToLower().Contains(x))
+            {
+                count++;
+            }
+        }
+        if (count == b.Length)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
     public static string NameFile(string name)
     {
         string[] Split = name.Split(".");
@@ -18,7 +117,6 @@ public class Methods
         }
         return TXTList;
     }
-
     public static string[] StrConverter(string txt) //metodo para guardar array de palabras    (usado en Moogle / Query)
     {
         string[] SignBox = new string[] { "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "+", "-", "=", "`", "[", "]", "{", "}", ";", "|", ":", "'", "<", ">", ",", ".", "?", "/" };
@@ -33,7 +131,7 @@ public class Methods
     }
     public static string[] StrConverterOperatorVersion(string txt) //metodo para guardar array de palabras que tienen operadores
     {
-        string[] SignBox = new string[] {"@", "#", "$", "%", "&", "(", ")", "_", "+", "-", "=", "`", "[", "]", "{", "}", ";", "|", ":", "'", "<", ">", ",", ".", "?", "/" };
+        string[] SignBox = new string[] { "@", "#", "$", "%", "&", "(", ")", "_", "+", "-", "=", "`", "[", "]", "{", "}", ";", "|", ":", "'", "<", ">", ",", ".", "?", "/" };
         foreach (string a in SignBox) //elimino todos los signos
         {
             txt = txt.Replace(a, " ");
@@ -45,7 +143,7 @@ public class Methods
     }
     public static string[] EliminateRepeatsAndNulls(string[] a)
     {
-        string[] b = new string[]{};
+        string[] b = new string[] { };
         for (int i = 0; i < a.Length; i++)
         {
             if (a[i] != "" && !b.Contains(a[i]))
@@ -242,7 +340,7 @@ public class Methods
         {
             foreach (TXT y in TXTvector)
             {
-                if (y.text.Contains(x))
+                if (y.text.ToLower().Contains(x))
                 {
                     Ret.Add(y);
                 }
@@ -291,7 +389,7 @@ public class Methods
             float FavFloat = 0;
             foreach (string word in Intersection)
             {
-                if (Matrix[DTxt[x.Item1.title], DWord[word]] > FavFloat)
+                if (Matrix[DTxt[x.Item1.title], DWord[word]] >= FavFloat)
                 {
                     FavFloat = Matrix[DTxt[x.Item1.title], DWord[word]];
                     FavWord = word;
@@ -325,7 +423,11 @@ public class Methods
                     {
                         if (i < 10)
                         {
-                            string[] re = b.text.Split(" ", 10);
+                            string[] re = b.text.Split(" ", 11);
+                            if(re.Length<10)
+                            {
+                                return String.Join(' ', re);
+                            }
                             string[] re2 = new string[re.Length - 1];
                             for (int j = 0; j < re2.Length; j++)
                             {
@@ -375,27 +477,27 @@ public class Methods
         }
         return "";
     }
-    public static SearchItem[] EliminateDouble (SearchItem[] a)
+    public static SearchItem[] EliminateDouble(SearchItem[] a)
     {
-        SearchItem[] b = new SearchItem[]{};
-        foreach(SearchItem x in a)
+        SearchItem[] b = new SearchItem[] { };
+        foreach (SearchItem x in a)
         {
             bool isin = false;
-            foreach(SearchItem y in b)
+            foreach (SearchItem y in b)
             {
-                if(y.Title==x.Title)
+                if (y.Title == x.Title)
                 {
-                    isin=true;
+                    isin = true;
                 }
             }
             if (!isin)
             {
-                SearchItem[] c = new SearchItem[b.Length+1];
-                for(int i = 0; i<b.Length; i++)
+                SearchItem[] c = new SearchItem[b.Length + 1];
+                for (int i = 0; i < b.Length; i++)
                 {
-                    c[i]=b[i];
+                    c[i] = b[i];
                 }
-                c[c.Length-1] = x;
+                c[c.Length - 1] = x;
                 b = c;
             }
         }

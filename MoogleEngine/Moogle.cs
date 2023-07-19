@@ -17,13 +17,13 @@ public static class Moogle
         string[] CareSign = Operators.CareSign(OperatorQuery);
 
         //Creando la lista interseccion entre el query y las palabras y la lista de recomendaciones
-        List<string> Intersection = Methods.Intersection(SeparatedQuery,WordsProcessing.wordsvector);
+        List<string> IntersectionWords = Methods.Intersection(SeparatedQuery,WordsProcessing.wordsvector);
         string[] Recommendations = Methods.ClosestAnswer(SeparatedQuery,WordsProcessing.wordsvector);
 
 
         //Creando la lista de documentos que contienen alguna palabra del query
-        List<TXT> DocList = Methods.TxtObtainer(SeparatedQuery,FilesProcessing.TXTvector);
-        List<(TXT,float)> Response = Methods.CosSimilitude(query, DocList, ScoreProcess.ScoreMatrix, Intersection, Dictionary.dicWords, Dictionary.dicTXT);
+        List<TXT> IntersectionDocs = Methods.TxtObtainer(SeparatedQuery,FilesProcessing.TXTvector);
+        List<(TXT,float)> Response = Methods.CosSimilitude(query, IntersectionDocs, ScoreProcess.ScoreMatrix, IntersectionWords, Dictionary.dicWords, Dictionary.dicTXT);
         
 
         //Aplicando trabajo con operadores
@@ -34,7 +34,7 @@ public static class Moogle
 
 
         //Transformando elementos en SearchItems (y hallando el Snippet)
-        SearchItem[] items = Methods.ToSearchItem(Response, ScoreProcess.ScoreMatrix, Intersection, Dictionary.dicWords, Dictionary.dicTXT);
+        SearchItem[] items = Methods.ToSearchItem(Response, ScoreProcess.ScoreMatrix, IntersectionWords, Dictionary.dicWords, Dictionary.dicTXT);
         Array.Sort(items, (x,y) => y.Score.CompareTo (x.Score));
         items = Methods.EliminateDouble(items);
 
