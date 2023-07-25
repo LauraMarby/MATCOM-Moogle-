@@ -1,0 +1,200 @@
+\documentclass[12pt,a4paper,onecolumn]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\usepackage{lmodern}
+\usepackage{kpfonts}
+\usepackage{fourier}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\author{Laura Mártir Beltrán}
+\title{Informe Escrito}
+
+\begin{document}
+
+
+
+\begin{LARGE}
+
+\begin{flushleft}
+
+Proyecto \textbf{Moogle!}\\
+Estudiante: \textbf{Laura Martir Beltrán}\\
+Grupo: \textbf{C-113}\\
+
+\end{flushleft}
+
+\end{LARGE}
+
+\begin{flushleft}
+\begin{Large}
+\textbf{Ciencias de la Computación} en la \textbf{Universidad de La Habana}\\
+
+\end{Large}
+
+\end{flushleft}
+
+\begin{flushleft}
+
+\begin{LARGE}
+\textbf{Informe Escrito}
+\end{LARGE}
+
+\begin{Large}
+TEMAS:
+
+•Qué es Moogle?
+
+•Clases
+
+•Procesamiento de Datos
+
+•Operadores
+
+•Modelo Vectorial
+
+\end{Large}
+
+\begin{LARGE}
+\textbf{\\\emph{•Qué es Moogle?}}
+\end{LARGE}\\
+
+\begin{large}
+\textbf{Moogle!} es un motor de búsqueda el cual dada cierta
+información ofrecida por el usuario, devuelve todos los
+documentos relacionados con ella gracias a una biblioteca de
+datos que tiene almacenados y procesados.
+\end{large}
+
+\begin{LARGE}
+\textbf{\\\emph{•Clases}}
+\end{LARGE}\\
+
+\begin{large}
+Para una mejor implementación es necesario crear una nueva
+clase que formará una parte muy importante del proyecto.
+\\
+1- \textbf{TXT}(documento):
+\\
+Características: \\
+1.1-Título del documento(\textbf{title}).
+                   \\
+1.2-Contenido del Documento(\textbf{text}).
+\end{large}
+
+\begin{LARGE}
+\textbf{\\\emph{•Procesamiento de Datos}}
+\end{LARGE}\\
+
+\begin{large}
+
+1-\textbf{ Procesamiento de documentos y su contenido}:
+\\
+Para hacer el procesamiento de documentos es necesario crear
+un directorio donde se guarda toda la información que está en la
+carpeta \textbf{Content}.
+De esta información extraemos todos los archivos “\textbf{.txt}” para
+luego procesarlos y guardar su título y su contenido en el objeto
+de clase \textbf{TXT}.\\
+
+
+2-\textbf{ Procesamiento de las palabras del contenido de los
+documentos}:
+\\
+Es necesario tener un conjunto de palabras que agrupe a todas
+estas contenidas en los documentos. Son procesadas de manera
+tal que no posean signos innecesarios para la búsqueda\\
+Cabe mencionar que en este conjunto de palabras no conviene
+tener ninguna repetida, ya que es poco conveniente para futuros
+procesamientos.
+
+\end{large}
+
+\begin{LARGE}
+\textbf{\\\emph{•Operadores}}
+\end{LARGE}\\
+
+\begin{large}
+
+Estos son \textbf{signos} o \textbf{símbolos} que indican cómo se debe manipular
+ciertos elementos en la búsqueda:\\
+
+-(\textbf{ * }): afecta el \textbf{score} de la palabra que lo precede en la
+búsqueda y lo aumenta para así darle mas importancia en los
+archivos por encima de las demás.\\
+
+-(\textbf{ $\wedge$ }): la palabra a la que preceda este símbolo debe estar en
+todos los documentos que devuelva la búsqueda.\\
+
+-( \textbf{¡ }): la palabra a la que preceda este símbolo no puede
+aparecer en ningun documento devuelto en la búsqueda.\\
+
+-(\textbf{ $\thicksim$ }): se encuentra entre dos palabras del \textbf{query} y define que
+para todos los documentos de la base de datos, mientra más
+cerca entre sí estén las palabras que preceden este símbolo, más
+importancia se le dará a este documento en la entrega de un
+resultado.
+
+\end{large}
+
+\begin{LARGE}
+\textbf{\\\emph{•Modelo Vectorial}}
+\end{LARGE}
+
+\begin{large}
+
+
+Antes de trabajar con el \textbf{query}, debemos obtener el peso de cada
+palabra en nuestra bibliotea en cada uno de nuestros
+documentos. Para ello utilizamos una matriz bidimensional que
+contiene \textbf{valores flotantes} que representan el resultado obtenido
+tras aplicar el cálculo de una fórmula conocida como “\textbf{Term
+Frequency * Inverse Document Frequency}”. Como no conocemos
+a ciencia cierta qué numero de columna corresponde a cada
+palabra y que fila a cada archivo, empleamos diccionarios para
+mantener bien catalogados nuestros datos en la matriz.\\
+
+Tras llenar la matriz, comenzamos a trabajar con el \textbf{query}:
+separamos en palabras y lo llevamos a vector \textbf{TXT} para hallar el
+peso de cada palabra de este. Posteriormente aplicamos el
+cálculo de la \textbf{similitud del coseno} entre todos los documentos
+que contengan al menos una palabra del \textbf{query} y del vector \textbf{TXT}
+que lo representa. Esto resultará en la obtención de una lista de
+valores correspondientes a cada documento evaluado, y estos
+valores son el “\textbf{score}” respectivo de cada uno de ellos.\\
+
+Paralelamente a este proceso, se ejecuta la obtención de las
+\textbf{palabras recomendadas}:\\
+
+Analizamos cada palabra del \textbf{query} y buscamos si se encuentra
+en nuestra lista. En ese caso, se le asigna como recomendada ella
+misma. En caso que la palabra no se encuentre entonces busca la
+más parecida a través de la implementación del \textbf{Edit-Distance} (o
+distancia de \textbf{Levenshtein}). De esta forma siempre va a devolver la
+palabra exacta o la más parecida.\\
+
+Finalmente se aplica el trabajo con \textbf{operadores} sobre la lista de
+documentos y flotantes obtenida para posteriormente llevar esa
+lista al tipo de dato \textbf{SeacrchItem}. Aquí la obtención del \textbf{Snippet}
+se ejecuta respecto a la palabra más importante de la búsqueda
+que se encuentre en dicho documento. El \textbf{Snippet} es un
+fragmento de texto que muestra el contexto de la palabra
+encontrada. Luego de esto solo queda organizar los elementos
+por \textbf{Score} y devolver en orden de mayor a menor.\\
+
+Cabe destacar que si la lista de recomendaciones es exactamente
+igual al \textbf{query}, significa que todas las palabras estaban bien
+escritas. Sin embargo si no lo es, entonces se mostrará una
+recomendación con la corrección más apropiada de la palabra.
+
+\end{large}
+
+\end{flushleft}
+
+\end{document}
+
+
+

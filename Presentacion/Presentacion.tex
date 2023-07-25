@@ -1,0 +1,87 @@
+\documentclass[11pt]{beamer}
+\usetheme{Warsaw}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+%\author{}
+%\title{}
+%\setbeamercovered{transparent} 
+%\setbeamertemplate{navigation symbols}{} 
+%\logo{} 
+%\institute{} 
+%\date{} 
+%\subject{} 
+\begin{document}
+
+%\begin{frame}
+%\titlepage
+%\end{frame}
+
+%\begin{frame}
+%\tableofcontents
+%\end{frame}
+
+\begin{frame}{Proyecto \textbf{Moogle!}}
+\begin{flushleft}
+Estudiante: \textbf{Laura Martir Beltrán}\\
+Grupo: \textbf{C-113}\\
+
+\end{flushleft}
+\begin{center}
+\textbf{Ciencias de la Computación} en la \textbf{Universidad de La Habana}\\
+
+\end{center}
+\begin{center}
+\textbf{TEMAS:}\\
+•Qué es Moogle!?\\
+•Clases nuevas\\
+•Operadores disponibles a utilizar\\
+(para más información sobre \textbf{procesamiento de datos} y \textbf{modelo vectorial}, visitar el \textbf{informe escrito})
+\end{center}
+
+\end{frame}
+\begin{frame}{•Qué es \textbf{Moogle!}?}
+\begin{center}
+\textbf{Moogle!} Es un motor de búsqueda el cual dada cierta información ofrecida por el usuario, devuelve todos los documentos relacionados con ella gracias a una biblioteca de datos que tiene almacenados y procesados.
+\end{center}
+\end{frame}
+
+\begin{frame}{•Clases nuevas}
+\begin{center}
+Para una mejor implementación es necesario crear una nueva \textbf{clase} que formará una parte muy importante de proyecto.
+
+\end{center}
+\begin{center}
+\textbf{1}-\textbf{TXT}(documento):\\
+Características:\\
+\textbf{1.1}-Título del documento(\textbf{title}).\\
+\textbf{1.2}-Contenido del documento(\textbf{text}).
+
+\end{center}
+
+\end{frame}
+\begin{frame}{•Operadores disponibles a utilizar}
+
+Estos son signos o símbolos que indican como se debe manipular ciertos elementos de la búsqueda:\\
+-[ \textbf{*} ]:  Afecta el \textbf{score} de la palabra que lo precede en la búsqueda y lo aumenta
+para así darle mas importancia en los archivos por encima de las demás.\\
+
+-[ \textbf{!} ]:  La palabra a la que preceda este \textbf{símbolo} no puede aparecer en ningún
+documento devuelto en la búsqueda.\\
+
+-[ \textbf{$\wedge$} ]:  La palabra a la que preceda este \textbf{símbolo} debe estar en todos los
+documentos que devuelva la búsqueda.\\
+
+-[ \textbf{$\thicksim$} ]:  Se encuentra entre dos palabras del \textbf{query} y define que para todos los
+documentos de la base de datos, mientra más cerca entre sí estén las palabras
+que preceden este símbolo,más importancia se le dará a este documento en la
+entrega de un resultado.
+
+
+
+\end{frame}
+
+\end{document}
